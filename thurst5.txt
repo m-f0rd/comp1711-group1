@@ -1,0 +1,58 @@
+    1  git pull
+    2  tree
+    3  pwd
+    4  ls
+    5  unzip week1data.zip 
+    6  cat data1.txt 
+    7  cat data2.txt 
+    8  ls
+    9  tree
+   10  cd test/
+   11  ls
+   12  pwed
+   13  pwd
+   14  cd ..
+   15  pwd
+   16  tar man
+   17  tar -h
+   18  tar --help
+   19  cat data1.txt data2.txt > amysrecords.csv
+   20  less amysrecords.csv 
+   21  cat amysrecords.csv | head -n 42 | tail -n 1
+   22  less amysrecords.csv 
+   23  grep Eminem amysrecords.csv 
+   24  grep 2002 amysrecords.csv 
+   25  grep 'Pink Floyd'  amysrecords.csv 
+   26  grep 'Pink Floyd'  amysrecords.csv | cut -d ','-f 4
+   27  grep 'Pink Floyd'  amysrecords.csv | cut -d ',' -f 4
+   28  grep 1970  amysrecords.csv
+   29  grep 197?  amysrecords.csv
+   30  grep 197*  amysrecords.csv
+   31  grep 197[0-9]  amysrecords.csv
+   32  grep 197[0-9]  amysrecords.csv | cut -d ',' -f 2
+   33  grep 197[0-9]  amysrecords.csv | cut -d ',' -f 2 | sort
+   34  grep200 [0-9]  amysrecords.csv | cut -d ',' -f 2 | sort
+   35  grep 200[0-9]  amysrecords.csv | cut -d ',' -f 2 | sort
+   36  grep 200[0-9]  amysrecords.csv | cut -d ',' -f 2 | sort > nauties.txt
+   37  cat nauties.txt 
+   38  mkdir exersises
+   39  ls
+   40  cd exersises/
+   41  mkdir exersise1
+   42  cd exersise1/
+   43  mkdir work
+   44  mkdir work/input_data/ work/results/ work/program/
+   45  ls
+   46  tree
+   47  add .
+   48  git status
+   49  git add
+   50  git add .
+   51  git status
+   52  cd ../..
+   53  git add -A
+   54  git status
+   55  git commit -m "thursday 5th"
+   56  git push
+   57  history
+   58  history > thurst5.txt
