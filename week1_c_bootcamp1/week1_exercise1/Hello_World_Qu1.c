@@ -1,4 +1,4 @@
-// Write a program to pint "Hello, World!" on the screen
+// Write a program to print "Hello, World!" on the screen
 
 #include <stdio.h>
 int main() {
