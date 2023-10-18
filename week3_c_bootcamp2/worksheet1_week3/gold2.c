@@ -6,10 +6,11 @@
 int main() {
     int userNum;
     int cond = 1;
+
     while (cond == 1)
     {
         printf("Can you input a number: \n");
-        scanf("%d",userNum);
+        scanf("%d", &userNum);
 
         if (userNum == -1)
         {
