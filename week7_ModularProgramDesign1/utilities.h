@@ -133,7 +133,59 @@ float find_lowest(reading* dataArray, int numReadings)
  * @param dataArray The array of data from the file
  * @param numReadings The number of readings in the array
  */
-void monthly_iron(reading* dataArray, int numReadings)
+void monthly_iron(reading* dataArray, int numReadings, char *month)
 {
+    
+    char ret;
+    for (int i = 0; i < numReadings; i++)
+    {
+        ret = strstr(dataArray[i], month);
+        if (ret == 0)
+        {
+            pass
+        }
+        else
+        {
+            pass
+        }
+    }
+    
     // to do
 }
+
+"""
+int main () {
+   const char haystack[20] = "TutorialsPoint";
+   const char needle[10] = "Point";
+   char *ret;
+
+   ret = strstr(haystack, needle);
+
+   printf("The substring is: %s\n", ret);
+   
+   return(0);
+}
+
+// #include <string.h>
+// #include <stdio.h>
+ 
+// void find_str(char const *str, char const *substr)
+// {
+//     char *pos = strstr(str, substr);
+//     pos ? printf("found the string '%s' in '%s' at position %td\n",
+//                  substr, str, pos - str)
+//         : printf("the string '%s' was not found in '%s'\n",
+//                  substr, str);
+// }
+ 
+// int main(void)
+// {
+//     char *str = "one two three";
+//     find_str(str, "two");
+//     find_str(str, "");
+//     find_str(str, "nine");
+//     find_str(str, "n");
+ 
+//     return 0;
+// }
+"""
