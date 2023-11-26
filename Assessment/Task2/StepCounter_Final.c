@@ -7,7 +7,7 @@
 
 // Define any additional variables here
 // Global variables for filename and FITNESS_DATA array
-
+FITNESS_DATA file_record[300];
 
 // This is your helper function. Do not change it in any way.
 // Inputs: character array representing a row; the delimiter character
@@ -42,75 +42,151 @@ void tokeniseRecord(const char *input, const char *delimiter,
 
 // Complete the main function
 int main() {
-   /**
-    * my plan:
-    * have a switch for the menu options
-    * 
-    * A: Specify the filename to be imported (we will give you some additional files to test with). This should have some error checking so that the program can cope with an incorrect filename and a file that is of an unexpected format.
-    *       input the code from today about if filename not found return error message
-    * B: Display the total number of records in the file
-    * C: Find the date and time of the timeslot with the fewest steps
-    * D: Find the data and time of the timeslot with the largest number of steps    
-    * E: Find the mean step count of all the records in the file
-    * F: Find the longest continuous period where the step count is above 500 steps
-   */
-
-  char menuOpt[3];
-    printf("please enter your menu option, from A-F\n");
-    scanf("%s",&menuOpt);
-
-    switch (menuOpt) ///NOT WORKING, USE CODE.C FROM WEEK 7
+    float lowest = 9999999999;
+    int low;
+    float highest = -9999999999;
+    int high;
+    float mean = 0;
+    int total = 0;
+    FITNESS_DATA file_record[300];
+    char line_buffer[buffer_size];
+    int record_counter = 0;
+    char filename[buffer_size];
+    char menuOpt;
+    while (1)
     {
-"""
-        printf("\nPlease enter one of the following menu options\n\n");
-
-        printf("A: View all your blood iron levels\n");                       // BRONZE
-        printf("B: View your average blood iron level\n");                    // BRONZE
-        printf("C: View your highest blood iron level\n");                     // SILVER
-        printf("D: View your lowest blood iron level\n");                    // SILVER
-        printf("E: View the blood iron levels for a specific month\n");       // SILVER/GOLD
-        printf("F: See some additional statistics about your iron levels\n"); // GOLD - see readme.md
-        printf("G: Generate a graph of your iron levels\n");                  // GOLD/PLATINUM - see readme.md
-        printf("Q: Exit the program\n");
 
         
-// get the next character typed in and store in the 'choice'
-    choice = getchar();
+        printf("\n\nMenu Options: --------------------------------------\n\n");
 
-    // this gets rid of the newline character which the user will enter
-    // as otherwise this will stay in the stdin and be read next time
-    while (getchar() != '\n');
+        printf("A: Specify the filename to be imported\n");
+        printf("B: Display the total number of records in the file\n");
+        printf("C: Find the date and time of the timeslot with the fewest steps\n");
+        printf("D: Find the data and time of the timeslot with the largest number of steps\n");
+        printf("E: Find the mean step count of all the records in the file\n");
+        printf("F: Find the longest continuous period where the step count is above 500 steps\n"); 
+        printf("Q: Exit the program\n\n");
+        printf("Enter choice: ");
+
+            
+    // get the next character typed in and store in the 'menuOpt'
+        menuOpt = getchar();
+        // this gets rid of the newline character which the user will enter
+        // as otherwise this will stay in the stdin and be read next time
+        while (getchar() != '\n');
 
 
-    // switch statement to control the menu.
-    switch (choice)
-    {
-    // this allows for either capital or lower case
-    case 'A':
-    case 'a':
+        // switch statement to control the menu.
+        switch (menuOpt)
+        {
+        // this allows for either capital or lower case
 
-  """  
-        case 'A': printf("Specify the filename to be imported\n");
-        break;
+        case 'A': // DONE -------------------------
+        case 'a': // Specify the filename to be imported
+            printf("Input filename: ");
+            fgets(line_buffer, buffer_size, stdin);
+            sscanf(line_buffer, " %s ", filename);
+
+
+            // if (!(open_file(filename))){ //calls on function that i have given up on
+            //     printf("nononon");
+            //     return 0;
+            // }
+            FILE *file = fopen(filename, "r");
+                if (file == NULL) {
+                    perror("");
+                    printf("Error: Could not find or open the file.\n");
+
+                    return 1;
+                }
+            char date_temp[11];
+            char time_temp[6];
+            char steps_temp[10];
+
+                    
+            while (fgets(line_buffer, buffer_size, file) != NULL) {
+
+                tokeniseRecord(line_buffer,",", date_temp, time_temp, steps_temp);
+
+                strcpy(file_record[record_counter].date, date_temp);
+                strcpy(file_record[record_counter].time, time_temp);
+                strcpy(file_record[record_counter].steps, steps_temp);
+                //file_record[record_counter].steps= atoi(steps_temp);
+
+                record_counter+=1;
+            }
+            fclose(file);
+            printf("File successfully loaded.");
+
+            break;
         
-        case 'B': printf("Display the total number of records in the file\n");
-        break;
+        case 'B': // DONE -------------------------
+        case 'b': // Display the total number of records in the file DONE
+            printf("Total records %d\n", record_counter);
+            break;
 
-        case 'C': printf("Find the date and time of the timeslot with the fewest steps\n");
-        break;
+        case 'C': // DONE -------------------------
+        case 'c':// Find the date and time of the timeslot with the fewest steps
+            
+            for (int i = 0; i < record_counter; i++)
+            {
+                if (lowest > atoi(file_record[i].steps))
+                {
+                    lowest = atoi(file_record[i].steps);
+                    low = i;
+                }
+            }
 
-        case 'D': printf("Find the date and time of the timeslot with the largest number of steps\n");
-        break;
+            printf("Fewest steps: %s %s", file_record[low].date, file_record[low].time );
+            break;
 
-        case 'E': printf("Find the mean step count of all the records in the file\n");
-        break;
+        case 'D': // DONE -------------------------
+        case 'd': // Find the date and time of the timeslot with the largest number of steps
+            for (int i = 0; i < record_counter; i++)
+            {
+                if (highest < atoi(file_record[i].steps))
+                {
+                    highest = atoi(file_record[i].steps);
+                    high = i;
+                }
+            }
+            printf("Largest steps: %s %s", file_record[high].date, file_record[high].time );
+            break;
+
+        case 'E': // DONE ------------------------------------------
+        case 'e': // Find the mean step count of all the records in the file
+            for (int i = 0; i < record_counter; i++)
+            {
+                total += atoi(file_record[i].steps);
+            }
+            mean = total/record_counter;
+            printf("Mean step count: %.0f", mean);
+            break;
         
-        case 'F': printf("Find the longest continuous period where the step count is above 500 steps\n");
-        break;
+        case 'F': // Find the longest continuous period where the step count is above 500 steps
+        case 'f':
+            for (int i = 0; i < record_counter; i++)
+            {
+                if (500 < atoi(file_record[i].steps))
+                {
+                    highest = atoi(file_record[i].steps);
+                    high = i;
+                }
+            }
 
-        case 'Q': printf("Quit\n");
-        break;
+            printf("Longest period start: ");
+            printf("Longest period end: ");
+            break;
 
-        default: printf("Invalid choice. Try again.\n");
+        case 'Q': // Quit
+        case 'q':
+            printf("Choise q was chosen\n");
+            return 0;
+            break;
+
+        default: // Invalid choice. Try again.
+            printf("Invalid choice. Try again.\n");
+
+        }
     }
 }
