@@ -66,7 +66,7 @@ int main() {
     {
 
         
-        printf("Menu Options:\n");
+        printf("\n\nMenu Options: --------------------------------------\n\n");
 
         printf("A: Specify the filename to be imported\n");
         printf("B: Display the total number of records in the file\n");
@@ -74,7 +74,7 @@ int main() {
         printf("D: Find the data and time of the timeslot with the largest number of steps\n");
         printf("E: Find the mean step count of all the records in the file\n");
         printf("F: Find the longest continuous period where the step count is above 500 steps\n"); 
-        printf("Q: Exit the program\n");
+        printf("Q: Exit the program\n\n");
         printf("Enter choice: ");
 
             
@@ -103,9 +103,8 @@ int main() {
             // }
             FILE *file = fopen(filename, "r");
                 if (file == NULL) {
-                    // perror("");
-                    printf("Error: Could not find or open the file.");
-                    printf("\n");
+                    perror("");
+                    printf("Error: Could not find or open the file.\n");
 
                     return 1;
                 }
@@ -127,13 +126,19 @@ int main() {
             }
             fclose(file);
             printf("File successfully loaded.");
-            printf("\n");
+            // delete
+            printf("\nRecord counter = %d", record_counter);
+            printf("\nFinal record %s %s\n\n", file_record[record_counter].date, file_record[record_counter].time);
+            for (int i = 0; i < record_counter; i++)
+            {
+                printf("\nRecord number %d - date: %s",i,  file_record[i].date);
+            }
+            // delete
             break;
         
         case 'B': // DONE -------------------------
         case 'b': // Display the total number of records in the file DONE
-            printf("Total records: %d", record_counter);
-            printf("\n");
+            printf("Total records %d\n", record_counter);
             break;
 
         case 'C': // DONE -------------------------
@@ -149,7 +154,6 @@ int main() {
             }
 
             printf("Fewest steps: %s %s", file_record[low].date, file_record[low].time );
-            printf("\n");
             break;
 
         case 'D': // DONE -------------------------
@@ -163,7 +167,6 @@ int main() {
                 }
             }
             printf("Largest steps: %s %s", file_record[high].date, file_record[high].time );
-            printf("\n");
             break;
 
         case 'E': // DONE ------------------------------------------
@@ -172,10 +175,9 @@ int main() {
             {
                 total += atoi(file_record[i].steps);
             }
-            mean_f = total/(float)record_counter; // treat record as float to make mean_f float
+            mean_f = total/record_counter;
             mean = mean_f + 0.5; // adds 0.5 then converts to int so it is rounded
             printf("Mean step count: %d", mean);
-            printf("\n");
             break;
         
         case 'F': // Find the longest continuous period where the step count is above 500 steps
@@ -189,11 +191,13 @@ int main() {
                     {
                         start_date_pos_check = i; // start date location is i
                         tally += 1;
+                        printf("\n\nThis is the start location and step value: %d with steps %d \n", i, atoi(file_record[i].steps) );
                     }
                     else // if this isnt the start of a new chain aka 2nd/3rd etc item in chain
                     {
                         tally += 1;
-                    
+                        printf("location and step value: %d with steps %d \n", i, atoi(file_record[i].steps) );
+
                     }
                     
                 }
@@ -211,10 +215,26 @@ int main() {
                         tally = 0;
                     }
                 }
+                //delete
+                if (i == record_counter)
+                {
+                    printf("\nhehehehehehe\n");
+                }
+                if (i == 59)
+                {
+                    printf("\nhohohohohho\n");
+                }
+                if (i == 58)
+                {
+                    printf("\nhahahahahah\n");
+                }
+                // delete
             }
-            printf("Longest period start: %s %s", file_record[start_date_pos_store].date, file_record[start_date_pos_store].time);
+            //delete
+            printf("This is the longest chain: %d and this is the start date location %d", longest_chain, start_date_pos_store);
+            // delete
+            printf("\nLongest period start: %s %s", file_record[start_date_pos_store].date, file_record[start_date_pos_store].time);
             printf("\nLongest period end: %s %s", file_record[start_date_pos_store + longest_chain - 1].date, file_record[start_date_pos_store + longest_chain - 1].time);
-            printf("\n");
             break;
 
         case 'Q': // Quit
@@ -224,8 +244,8 @@ int main() {
             break;
 
         default: // Invalid choice. Try again.
-            printf("Invalid choice. Try again.");
-            printf("\n");
+            printf("Invalid choice. Try again.\n");
+
         }
     }
 }
